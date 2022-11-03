@@ -18,22 +18,15 @@ fruits_to_show = my_fruit_list.loc[fruit_selected]
 streamlit.dataframe(fruits_to_show)
 
 streamlit.header("Fruityvice Fruit Advice!")
+try:
 fruit_choice = streamlit.text_input('What fruit would you like information about?','Kiwi')
-streamlit.write('The user entered ', fruit_choice)
-import requests
+if not fruit_choice:
+  steamlit.error("please select a fruit to get information")
+else:  
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
-
-# write your own comment -what does the next line do? 
 fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
-# write your own comment - what does this do?
 streamlit.dataframe(fruityvice_normalized)
-steamlit.stop()
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-my_cur.execute("SELECT * from fruit_load_list")
-my_data_rows = my_cur.fetchall()
-streamlit.header("The fruit load list contains")
-streamlit.dataframe(my_data_rows)
-fruit_customerchoice = streamlit.text_input('What fruit would you like to add ?','Apple')
-streamlit.write('Thanks for adding ', fruit_customerchoice)
-my_cur.execute("insert into fruit_load_list values ('from steamlit')")
+
+except URLError as e:
+   steamlit.error()
+
