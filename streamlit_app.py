@@ -28,7 +28,7 @@ try:
   fruit_choice = streamlit.text_input('What fruit would you like information about?' )
   
   if not fruit_choice:
-        streamlit.error("please select a fruit to get information.")
+        streamlit.error("please select a fruit to get information")
   else:  
         #fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
         #fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
@@ -41,7 +41,7 @@ try:
            with my_cnx.cursor() as my_cur:
                 my_cur.execute("select * from fruit_load_list")
                 return my_cur.fetchall()
-          if steamlit.button('Get Fruit Load List'):
+          if steamlit.button('Get Fruit Load List')
                my_cnx = snowflake.connector.connect(**steamlit.secrets["snowflake"])
               my_data_rows = get_fruit_load_list()
               streamlit.dataframe(my_data_rows)
