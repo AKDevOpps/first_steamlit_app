@@ -36,7 +36,11 @@ try:
         back_from_function = get_fruityvice_data(fruit_choice)
         streamlit.dataframe(back_from_function)
 
-        steamlit.header("the fruit load list contains:")
+      
+except URLError as e:
+       streamlit.error()
+    
+    steamlit.header("the fruit load list contains:")
         def get_fruit_load_list():
            with my_cnx.cursor() as my_cur:
                 my_cur.execute("select * from fruit_load_list")
@@ -44,9 +48,5 @@ try:
         if steamlit.button('Get Fruit Load List'):
                my_cnx = snowflake.connector.connect(**steamlit.secrets["snowflake"])
                my_data_rows = get_fruit_load_list()
-               streamlit.dataframe(my_data_rows)
-except URLError as e:
-       streamlit.error()
-    
-    
+               streamlit.dataframe(my_data_rows)  
 
